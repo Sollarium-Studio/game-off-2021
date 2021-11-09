@@ -14,7 +14,6 @@ namespace Config
         {
             if (instance) Destroy(gameObject);
             else instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         #endregion
@@ -43,7 +42,6 @@ namespace Config
                 var newSave = new SaveFile();
                 SaveSerialization.Save("test", newSave);
             }
-
             updateConfigurations();
         }
     }

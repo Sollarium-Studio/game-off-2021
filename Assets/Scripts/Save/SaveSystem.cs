@@ -18,17 +18,17 @@ namespace Save
         }
         
         #endregion
-        
+
         public SaveFile Save(string saveName, SaveFile data)
         {
             SaveSerialization.Save(saveName, data);
             return data;
         }
         
-        [CanBeNull]
         public SaveFile Load(string saveName)
         {
-            return SaveSerialization.Load($"{Application.persistentDataPath}/saves/{saveName}.sol");
+            var fileLoaded =  SaveSerialization.Load($"{Application.persistentDataPath}/saves/{saveName}.sol");
+            return fileLoaded;
         }
     }
 }

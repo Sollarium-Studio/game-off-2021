@@ -24,7 +24,6 @@ namespace Save
             return true;
         }
 
-        [CanBeNull]
         public static SaveFile Load(string path)
         {
             if (!File.Exists(path)) return null;
