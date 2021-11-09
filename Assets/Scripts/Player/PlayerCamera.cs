@@ -1,4 +1,6 @@
 using System;
+using Config;
+using Save;
 using UnityEngine;
 
 namespace Player
@@ -13,6 +15,11 @@ namespace Player
         public bool invertXAxis;
         public bool hideCursor;
         [Header("Components")] public Camera playerCamera;
+
+        private void Awake()
+        {
+            DataManager.instance.updateConfigurations += UpdatePlayerConfigurations;
+        }
 
         private void Start()
         {
@@ -46,6 +53,23 @@ namespace Player
         {
             playerCamera.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
             transform.rotation = Quaternion.Euler(0f, mouseYRotation, 0f);
+        }
+
+        public void UpdatePlayerConfigurations()
+        {
+            Debug.Log($"Update config called.");
+            mouseXSensitivity = DataManager.instance.data.configFile.mouseXSensitivity;
+            mouseYSensitivity = DataManager.instance.data.configFile.mouseYSensitivity;
+            invertXAxis = DataManager.instance.data.configFile.invertXAxisMouse;
+        }
+
+        private void OnApplicationQuit()
+        {
+            var save = DataManager.instance.data;
+            save.configFile.mouseXSensitivity = mouseXSensitivity;
+            save.configFile.mouseYSensitivity = mouseYSensitivity;
+            save.configFile.invertXAxisMouse = invertXAxis;
+            SaveSerialization.Save("test", save);
         }
     }
 }
