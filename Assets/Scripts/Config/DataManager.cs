@@ -42,7 +42,7 @@ namespace Config
                 var newSave = new SaveFile();
                 SaveSerialization.Save("test", newSave);
             }
-            updateConfigurations();
+            updateConfigurations?.Invoke();
         }
     }
 }

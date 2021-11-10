@@ -16,14 +16,11 @@ namespace Player
         public bool hideCursor;
         [Header("Components")] public Camera playerCamera;
 
-        private void Awake()
-        {
-            DataManager.instance.updateConfigurations += UpdatePlayerConfigurations;
-        }
-
         private void Start()
         {
             playerCamera = GetComponentInChildren<Camera>();
+            if (DataManager.instance)
+                DataManager.instance.updateConfigurations += UpdatePlayerConfigurations;
         }
 
         private void Update()
