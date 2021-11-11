@@ -31,6 +31,11 @@ namespace Player
 
         private void InputManager()
         {
+            //Cursor manager
+            if (Input.GetKeyDown(KeyCode.P)) hideCursor = !hideCursor;
+            Cursor.lockState = hideCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !hideCursor;
+            if (!hideCursor) return;
             //Movement Manager
             var mouseX = Input.GetAxisRaw("Mouse X");
             var mouseY = Input.GetAxisRaw("Mouse Y");
@@ -40,14 +45,11 @@ namespace Player
                 mouseXRotation -= mouseY * mouseXSensitivity * multiplier;
             mouseYRotation += mouseX * mouseYSensitivity * multiplier;
             mouseXRotation = Mathf.Clamp(mouseXRotation, -90f, 90f);
-            //Cursor manager
-            if (Input.GetKeyDown(KeyCode.P)) hideCursor = !hideCursor;
-            Cursor.lockState = hideCursor ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !hideCursor;
         }
 
         private void MakeRotation()
         {
+            if (!hideCursor) return;
             playerCamera.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
             transform.rotation = Quaternion.Euler(0f, mouseYRotation, 0f);
         }
