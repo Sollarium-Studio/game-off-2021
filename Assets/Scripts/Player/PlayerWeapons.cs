@@ -13,12 +13,18 @@ namespace Player
         public int currentWeapon;
         public int oldWeapon;
 
+        public delegate void WeaponFire();
+
+        public WeaponFire OnWeaponFire;
+
         private void Start()
         {
             weapons = weaponsParent.GetComponentsInChildren<WeaponItem>().ToList();
             weapons.ForEach(weapon =>
             {
                 weapon.player = gameObject;
+                weapon.playerWeapons= this;
+                weapon.playerCamera= GetComponent<PlayerCamera>();
                 weapon.gameObject.SetActive(weapon == weapons[0]);
             });
         }
@@ -51,8 +57,7 @@ namespace Player
 
         private void ChangeQuickWeapon()
         {
-            if (!Input.anyKeyDown) return;
-            if (Input.GetAxisRaw("Change Weapon") == 0) return;
+            if (!Input.GetButtonDown("Change Weapon")) return;
             if (oldWeapon == currentWeapon) return;
             SetNewWeapon(oldWeapon,currentWeapon);
             (oldWeapon, currentWeapon) = (currentWeapon, oldWeapon);
